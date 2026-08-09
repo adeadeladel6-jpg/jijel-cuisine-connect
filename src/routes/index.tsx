@@ -1,24 +1,79 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LangProvider } from "@/lib/i18n";
+import { SiteHeader } from "@/components/site-header";
+import { Hero } from "@/components/hero";
+import { About } from "@/components/about";
+import { MenuSection } from "@/components/menu-section";
+import { Reservation } from "@/components/reservation";
+import { Contact } from "@/components/contact";
+import { SiteFooter } from "@/components/site-footer";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const title = "مطعم دار الضيافة — جيجل | Restaurant à Jijel";
+const description =
+  "مطعم عائلي في حي العربي بن مهيدي، جيجل. غداء وعشاء وحلويات، حجز طاولات وخدمة خارجية. اتصل: +213 655 70 09 50";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "restaurant.restaurant" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Restaurant",
+          name: "مطعم دار الضيافة",
+          telephone: "+213655700950",
+          servesCuisine: "Algerian",
+          paymentAccepted: "Cash",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Cité Larbi Ben M'hidi",
+            addressLocality: "Jijel",
+            addressCountry: "DZ",
+          },
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+              opens: "10:59",
+              closes: "00:00",
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: "Friday",
+              opens: "10:59",
+              closes: "01:00",
+            },
+          ],
+        }),
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <LangProvider>
+      <div className="min-h-screen bg-background">
+        <SiteHeader />
+        <main>
+          <Hero />
+          <About />
+          <MenuSection />
+          <Reservation />
+          <Contact />
+        </main>
+        <SiteFooter />
+      </div>
+    </LangProvider>
   );
 }
