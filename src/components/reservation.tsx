@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { CalendarDays, Banknote, Loader2 } from "lucide-react";
-import { useLang } from "@/lib/i18n";
+import { useLang, PHONE } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,9 +43,27 @@ export function Reservation() {
     setSaving(false);
     if (error) {
       toast.error(t("resFail"));
-      return;
     }
-    toast.success(t("resOk"), { description: t("resOkDesc") });
+
+    const msg = [
+      "🍽️ *طلب حجز طاولة*",
+      `👤 الاسم: ${name}`,
+      `📞 الهاتف: ${phone}`,
+      `📅 التاريخ: ${form.date}`,
+      `🕒 الوقت: ${form.time}`,
+      `👥 عدد الأشخاص: ${form.guests}`,
+      form.notes.trim() ? `📝 ملاحظات: ${form.notes.trim()}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    window.open(
+      `https://wa.me/${PHONE.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(msg)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+
+    toast.success(t("resOk"), { description: t("resWhatsDesc") });
     setForm({ name: "", phone: "", date: "", time: "", guests: "2", notes: "" });
   };
 
