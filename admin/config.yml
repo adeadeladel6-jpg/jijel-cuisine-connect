@@ -1,0 +1,17 @@
+backend:
+  name: github
+  repo: adeadefadel6-jpg/jijel-cuisine-connect
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "menu"
+    label: "قائمة الطعام (Menu)"
+    folder: "content/menu"
+    create: true
+    fields:
+      - {name: "title", label: "اسم الطبق", widget: "string"}
+      - {name: "price", label: "السعر", widget: "string"}
+      - {name: "image", label: "صورة الطبق", widget: "image"}
