@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { CalendarDays, Banknote, Loader2 } from "lucide-react";
-import { useLang } from "@/lib/i18n";
+import { useLang, PHONE } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
