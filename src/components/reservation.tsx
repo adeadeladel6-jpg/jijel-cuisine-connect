@@ -143,9 +143,15 @@ export function Reservation() {
             <p className="text-sm text-foreground">{t("resCashNotice")}</p>
           </div>
 
-          <Button type="submit" variant="gold" size="lg" className="mt-6 w-full">
-            <CalendarDays className="h-5 w-5" /> {t("fSubmit")}
+          <Button type="submit" variant="gold" size="lg" className="mt-6 w-full" disabled={saving}>
+            {saving ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <CalendarDays className="h-5 w-5" />
+            )}{" "}
+            {t("fSubmit")}
           </Button>
+
         </form>
       </div>
     </section>
