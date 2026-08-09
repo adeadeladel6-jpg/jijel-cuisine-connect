@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
-import { CalendarDays, Banknote } from "lucide-react";
+import { CalendarDays, Banknote, Loader2 } from "lucide-react";
 import { useLang } from "@/lib/i18n";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function Reservation() {
   const { t } = useLang();
+  const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -20,7 +22,7 @@ export function Reservation() {
 
   const set = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const name = form.name.trim();
     const phone = form.phone.trim();
@@ -29,9 +31,24 @@ export function Reservation() {
       toast.error(t("resErr"));
       return;
     }
+    setSaving(true);
+    const { error } = await supabase.from("reservations").insert({
+      name,
+      phone,
+      reservation_date: form.date,
+      reservation_time: form.time,
+      guests: Number(form.guests),
+      notes: form.notes.trim() || null,
+    });
+    setSaving(false);
+    if (error) {
+      toast.error(t("resFail"));
+      return;
+    }
     toast.success(t("resOk"), { description: t("resOkDesc") });
     setForm({ name: "", phone: "", date: "", time: "", guests: "2", notes: "" });
   };
+
 
   return (
     <section id="reserve" className="scroll-mt-20 bg-background py-20">
