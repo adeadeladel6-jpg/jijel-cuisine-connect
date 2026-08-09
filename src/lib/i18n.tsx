@@ -8,7 +8,7 @@ export const PHONE_DISPLAY = "+213 655 70 09 50";
 type Dict = Record<string, string>;
 
 const ar: Dict = {
-  brandName: "مطعم دار الضيافة",
+  brandName: " مطعم النور الإخوة شبلوعة ",
   brandTagline: "جيجل",
   navHome: "الرئيسية",
   navAbout: "من نحن",
