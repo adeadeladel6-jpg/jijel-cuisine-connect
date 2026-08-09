@@ -64,6 +64,7 @@ const ar: Dict = {
   resOk: "تم استلام حجزك بنجاح!",
   resOkDesc: "سنتصل بك لتأكيد الموعد. الدفع نقدًا فقط عند الوصول.",
   resErr: "يرجى ملء جميع الحقول المطلوبة بشكل صحيح.",
+  resFail: "تعذّر إرسال الحجز، يرجى المحاولة مرة أخرى.",
   guests: "أشخاص",
 
   contactKicker: "زورونا",
@@ -138,6 +139,7 @@ const fr: Dict = {
   resOk: "Réservation bien reçue !",
   resOkDesc: "Nous vous appellerons pour confirmer. Paiement en espèces à l'arrivée.",
   resErr: "Merci de remplir correctement tous les champs requis.",
+  resFail: "Échec de l'envoi de la réservation, veuillez réessayer.",
   guests: "personnes",
 
   contactKicker: "Nous trouver",
